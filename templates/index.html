@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+</head>
+<body>
+    <h1>Chatbot Interface</h1>
+    <div id="chat-container"></div>
+    <textarea id="user-input" placeholder="Type your message..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById('user-input').value;
+            var chatContainer = document.getElementById('chat-container');
+            
+            // Append user message to the chat container
+            chatContainer.innerHTML += '<div>User: ' + userInput + '</div>';
+            
+            // Make API request to the chat endpoint
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    conversation: [
+                        { role: 'user', content: userInput },
+                        // Include any existing conversation messages here
+                    ]
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Append chatbot response to the chat container
+                chatContainer.innerHTML += '<div>Chatbot: ' + data.response + '</div>';
+            });
+            
+            // Clear user input
+            document.getElementById('user-input').value = '';
+        }
+    </script>
+</body>
+</html>
