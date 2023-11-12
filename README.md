@@ -1,4 +1,4 @@
-# Medical Intake Experiment
+# Legal Intake Experiment
 
 Automated pipeline for legal intake, case assessment, form requirements, etc. Meant to be used as a legal advisor.
 

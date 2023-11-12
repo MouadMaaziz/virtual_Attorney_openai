@@ -3,44 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Interface</title>
+    <title>Chatbot</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
 </head>
-<body>
-    <h1>Chatbot Interface</h1>
-    <div id="chat-container"></div>
-    <textarea id="user-input" placeholder="Type your message..."></textarea>
-    <button onclick="sendMessage()">Send</button>
+<body style="background-color: darkslategrey;">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Your virtual Lawyer</h1>
+        </div>
+
+        <div id="chat-container" class="chat-content">
+            <p class="intro">Share the details of your situation with our intake bot. When you're finished, simply type 
+                <strong>'DONE'</strong> to proceed.</p>
+            <br>
+        </div>
+
+        <form id="chat-form" action="/chat" method="get" class="chat-input-form">
+            <input name="user-input" type="text" id="user-input" placeholder="Type your message...">
+            <button type="submit">Send</button>
+        </form>
+    </div>
 
     <script>
-        function sendMessage() {
-            var userInput = document.getElementById('user-input').value;
-            var chatContainer = document.getElementById('chat-container');
-            
-            // Append user message to the chat container
-            chatContainer.innerHTML += '<div>User: ' + userInput + '</div>';
-            
-            // Make API request to the chat endpoint
-            fetch('/api/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    conversation: [
-                        { role: 'user', content: userInput },
-                        // Include any existing conversation messages here
-                    ]
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Append chatbot response to the chat container
-                chatContainer.innerHTML += '<div>Chatbot: ' + data.response + '</div>';
-            });
-            
-            // Clear user input
-            document.getElementById('user-input').value = '';
+    document.getElementById("chat-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // prevent the form from submitting in the traditional way
+    sendMessage();
+});
+
+function sendMessage() {
+    var userInput = document.getElementById("user-input").value;
+    document.getElementById("chat-container").innerHTML += `<p><span class='client-chat'> Client</span>: ${userInput}</p>`;
+
+    // Clear the text input
+    document.getElementById("user-input").value = "";
+
+    // Make an AJAX request to your Flask server with the user input
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                appendBotMessage(response);
+            } else {
+                console.log('Error: ' + xhr.status);
+            }
         }
+    };
+    
+    xhr.open('GET', '/chat?user-input=' + encodeURIComponent(userInput), true);
+    xhr.send();
+}
+
+function appendBotMessage(message) {
+    if (message.text != undefined ){
+    document.getElementById('chat-container').innerHTML += '<br>' + `<p><span class='assistant-chat'> Assistant:</span> ${message.text}</p>`;
+    }
+    if (message.notes != undefined && message.lawyers_report != undefined && message.form_requirements != undefined && message.scenario_and_outcomes != undefined ) {
+        document.getElementById('chat-container').innerHTML += '<br>' +
+            `<p> <span class='report-section'> NOTES </span></p>`+
+            `<p> ${message.notes.replace(/\n/g, '<br>')}</p>` +
+            `<p> <span class='report-section'> REPORT </span></p>`+
+            `<p> ${message.lawyers_report.replace(/\n/g, '<br>')}</p>` +
+            `<p> <span class='report-section'> FORM REQUIREMENTS </span></p>`+
+            `<p> ${message.form_requirements.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>` +
+            `<p> <span class='report-section'> SCENARIOS AND OUTCOMES </span></p>`+
+            `<p> ${message.scenario_and_outcomes.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`;
+
+    }
+}
+
     </script>
 </body>
 </html>
