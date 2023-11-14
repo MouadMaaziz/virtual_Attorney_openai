@@ -1,8 +1,9 @@
 # app.py
 import os
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, make_response
 from chat import chatbot, open_file, generate_intake_notes, generate_lawyers_report, generate_scenarios_and_outcomes, prepare_for_form_requirements
 import openai
+import json
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -19,10 +20,11 @@ all_messages = []
 
 @app.route('/')
 def home():
+    # Clear the conversation and all_messages when visiting the home page
     if 'conversation' in session:
-        session['conversation'] = []
+        session.pop('conversation', None)
     if 'all_messages' in session:
-        session['all_messages'] = []
+        session.pop('all_messages', None)
     return render_template('index.html')
     
 
@@ -46,6 +48,8 @@ def chat():
         conversation.append({'role': 'assistant', 'content': response_text})  
         
         all_messages.append(f'INTAKE: {response_text}') 
+        response = make_response(jsonify({'text': response_text}))
+        response.set_cookie('conversation_data', json.dumps(session['conversation']))
         return jsonify({'text': response_text})
 
 
