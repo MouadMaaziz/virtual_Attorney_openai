@@ -23,7 +23,7 @@ def home():
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
-   
+    
     # Intake portion
     while True:
         # get user input
@@ -66,6 +66,7 @@ def chat():
 
 
 if __name__ == '__main__':
+    
     app.run(debug=True)
 
 
