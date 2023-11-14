@@ -3,3 +3,4 @@ openai
 pyyaml
 python-dotenv
 gunicorn
+flask
