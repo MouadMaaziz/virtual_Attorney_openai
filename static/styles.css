@@ -14,7 +14,9 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .main-header{
-    width: 1em
+    width: 1em;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
 }
 .chat-header {
     background-color: #b40025;
