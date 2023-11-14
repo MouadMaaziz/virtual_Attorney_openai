@@ -20,7 +20,12 @@ body {
     padding: 20px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    text-align: center;
+    /* text-align: center; */
+    background-image:url(/static/img/free_gaza.jpg);
+    background-position: right; /* Center the image */
+    background-size: contain; /* Resize the background image to cover the entire container */
+    height: fit-content;
+    background-repeat: no-repeat;
 }
 
 .chat-content {
@@ -113,5 +118,5 @@ button:hover {
     color: #ffffff;
     font-size: 16px;
     border-radius: 5px;
-    margin-right: 10px;
+    margin: 2px;
 }
