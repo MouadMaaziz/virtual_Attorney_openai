@@ -1,3 +1,5 @@
 key_openai.txt
+.env
 venv
-/logs
+logs/*
+!/logs/.gitkeep

@@ -25,7 +25,7 @@ body {
 
 .chat-content {
     padding: 20px;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
@@ -74,4 +74,44 @@ button:hover {
 .report-section{
     font-weight: 600;
     color: rgb(85, 145, 21);
+}
+
+
+/* Add these styles for the spinner */
+.spinner-container {
+    text-align: center;
+    margin: 0 4px;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#results{
+    text-align: center;
+    display: none;
+}
+
+
+
+.result-button {
+    display: inline-block;
+    padding: 5px 6px;
+    text-decoration: none;
+    background-color: rgb(6, 216, 135);
+    color: #ffffff;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-right: 10px;
 }

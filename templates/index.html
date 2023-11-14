@@ -1,79 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <style>
+        
+    </style>
 </head>
-<body style="background-color: darkslategrey;">
+
+<body>
+
     <div class="chat-container">
         <div class="chat-header">
             <h1>Your virtual Lawyer</h1>
         </div>
 
         <div id="chat-container" class="chat-content">
-            <p class="intro">Share the details of your situation with our intake bot. When you're finished, simply type 
-                <strong>'DONE'</strong> to proceed.</p>
+            <p class="intro">Share the details of your situation with our intake bot. When you're finished, simply type
+                <strong>'DONE'</strong> to proceed.
+            </p>
             <br>
         </div>
-
+        <form action="/chat" method="get" id="results">
+            <button class="result-button" type="submit" name="results" value="report">Report</button>
+            <button class="result-button" type="submit" name="results" value="form">Form requirements</button>
+            <button class="result-button" type="submit" name="results" value="scenarios">Scenarions and outcomes</button>
+        </form>
         <form id="chat-form" action="/chat" method="get" class="chat-input-form">
+            
             <input name="user-input" type="text" id="user-input" placeholder="Type your message...">
-            <button type="submit">Send</button>
+            <div class="spinner-container" id="spinner-container">
+                <div class="spinner" id="spinner"></div>
+            </div>
+                
+            <button type="submit" ">Send</button>
         </form>
     </div>
 
     <script>
-    document.getElementById("chat-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // prevent the form from submitting in the traditional way
-    sendMessage();
-});
+        // Attach an event listener to the form submission
+        document.getElementById("chat-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // prevent the form from submitting in the traditional way
+            showSpinner();
+            sendMessage();
+        });
+        document.getElementById("results").addEventListener("submit", function (event) {
+            event.preventDefault(); // prevent the form from submitting in the traditional way
+            showSpinner();
+            sendMessage();
+        });
 
-function sendMessage() {
-    var userInput = document.getElementById("user-input").value;
-    document.getElementById("chat-container").innerHTML += `<p><span class='client-chat'> Client</span>: ${userInput}</p>`;
+        // Function to send user input to the server
+        function sendMessage() {
+            // Get user input from the input field
+            let userInput = document.getElementById("user-input").value;
+            let results = event.submitter.value
 
-    // Clear the text input
-    document.getElementById("user-input").value = "";
+            // Display the user's message in the chat container
+            if (userInput !== ''){
+            document.getElementById("chat-container").innerHTML += `<p><span class='client-chat'> Client</span>: ${userInput}</p>`;
+            scrollToBottom(); // Scroll to the bottom of the chat container
+            }   
+            // Clear the text input from the button 
+            document.getElementById("user-input").value = "";
 
-    // Make an AJAX request to your Flask server with the user input
-    var xhr = new XMLHttpRequest();
-    
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                appendBotMessage(response);
-            } else {
-                console.log('Error: ' + xhr.status);
+            // Make an AJAX request to your Flask server with the user input
+            function makeAjaxRequest(url, callback) {
+                const xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            const response = JSON.parse(xhr.responseText);
+                            appendBotMessage(response);
+                            hideSpinner();
+                        } else {
+                            console.log('Error: ' + xhr.status);
+                            hideSpinner();
+                        }
+                    }
+                };
+
+                xhr.open('GET', url, true);
+                xhr.send();
             }
+            // Configure and send the AJAX request
+            makeAjaxRequest('/chat?user-input=' + encodeURIComponent(userInput)+'&results=' + encodeURIComponent(results), true);
         }
-    };
+        // Function to append the assistant's message to the chat container
+        function appendBotMessage(message) {
+            if (message.text !== undefined) {
+                document.getElementById('chat-container').innerHTML += '<br>' + `<p><span class='assistant-chat'> Assistant:</span> ${message.text}</p>`;
+                scrollToBottom();
+            }
+            if (message.notes !== undefined){
+                document.getElementById('chat-container').innerHTML += '<br>' +
+                `<p> <span class='report-section'> NOTES </span></p>`+
+                `<p> ${message.notes.replace(/\n/g, '<br>')}</p>`; 
+                scrollToBottom();
+                showChoices();
+            }
+            if (message.lawyer_report !== undefined){
+                document.getElementById('chat-container').innerHTML += '<br>' +
+                `<p> <span class='report-section'> REPORT </span></p>` +
+                `<p> ${message.lawyer_report.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`;
+                scrollToBottom(); 
+                showChoices();
+            }
+            if (message.form_requirements !== undefined){
+                document.getElementById('chat-container').innerHTML += '<br>' +
+                `<p> <span class='report-section'> FORM REQUIREMENTS </span></p>`+
+                `<p> ${message.form_requirements.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`; 
+                scrollToBottom();
+                showChoices();
+            }
+            if (message.scenario_and_outcomes !== undefined){
+                document.getElementById('chat-container').innerHTML += '<br>' +
+                `<p> <span class='report-section'> SCENARIONS AND OUTCOMES </span></p>`+
+                `<p> ${message.scenario_and_outcomes.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`; 
+                scrollToBottom();
+                showChoices();
+            }
+
+        }
+        function scrollToBottom() {
+            let chatContainer = document.getElementById("chat-container");
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        function showChoices() {
+        document.getElementById('results').style.display = 'block';
+        }
+
+        function showSpinner() {
+        document.getElementById("spinner").style.display = "block";
+        }
+
+        function hideSpinner() {
+        document.getElementById("spinner").style.display = "none";
+        }
     
-    xhr.open('GET', '/chat?user-input=' + encodeURIComponent(userInput), true);
-    xhr.send();
-}
-
-function appendBotMessage(message) {
-    if (message.text != undefined ){
-    document.getElementById('chat-container').innerHTML += '<br>' + `<p><span class='assistant-chat'> Assistant:</span> ${message.text}</p>`;
-    }
-    if (message.notes != undefined && message.lawyers_report != undefined && message.form_requirements != undefined && message.scenario_and_outcomes != undefined ) {
-        document.getElementById('chat-container').innerHTML += '<br>' +
-            `<p> <span class='report-section'> NOTES </span></p>`+
-            `<p> ${message.notes.replace(/\n/g, '<br>')}</p>` +
-            `<p> <span class='report-section'> REPORT </span></p>`+
-            `<p> ${message.lawyers_report.replace(/\n/g, '<br>')}</p>` +
-            `<p> <span class='report-section'> FORM REQUIREMENTS </span></p>`+
-            `<p> ${message.form_requirements.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>` +
-            `<p> <span class='report-section'> SCENARIOS AND OUTCOMES </span></p>`+
-            `<p> ${message.scenario_and_outcomes.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`;
-
-    }
-}
-
     </script>
+
 </body>
+
 </html>
