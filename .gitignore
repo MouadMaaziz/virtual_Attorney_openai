@@ -1,5 +1,8 @@
+
+__pycache__
 key_openai.txt
 .env
 venv
 logs/*
 !/logs/.gitkeep
+
