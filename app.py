@@ -50,7 +50,7 @@ def chat():
         all_messages.append(f'INTAKE: {response_text}') 
         response = make_response(jsonify({'text': response_text}))
         response.set_cookie('conversation_data', json.dumps(session['conversation']))
-        return jsonify({'text': response_text})
+        return response
 
 
     # Generate intake notes
