@@ -2,3 +2,4 @@ halo
 openai
 pyyaml
 python-dotenv
+gunicorn
