@@ -10,7 +10,10 @@ load_dotenv()
 app = Flask(__name__)
 
 openai.api_key = os.getenv('OPENAI_KEY')
-
+conversation = list()
+conversation.append({'role': 'system', 'content': open_file('system_01_intake.md')})
+user_messages = list()
+all_messages = list()
 
 
 @app.route('/')
@@ -21,10 +24,7 @@ def home():
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
-    conversation = list()
-    conversation.append({'role': 'system', 'content': open_file('system_01_intake.md')})
-    user_messages = list()
-    all_messages = list()
+    
     # Intake portion
     while True:
         # get user input
