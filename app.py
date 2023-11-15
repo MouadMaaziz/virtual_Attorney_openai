@@ -35,12 +35,22 @@ def chat():
     if 'all_messages' not in session:
         session['all_messages'] = []
 
+    # Access cookies from the request
+    conversation_cookie = request.cookies.get('conversation_data')
+    all_messages_cookie = request.cookies.get('all_messages_data')
+
+    if all_messages_cookie:
+        session['all_messages'] = json.loads(all_messages_cookie)
+    if conversation_cookie:
+        session['conversation'] = json.loads(conversation_cookie)
+
     # Intake portion
     while True:
         # get user input
         text = request.args.get('user-input', '')
         if text == 'DONE' or text == '' :
             break
+        
         session['all_messages'].append(f'CLIENT: {text}')
         #store the user's message and the Lawyer's response:
         session['conversation'].append({'role': 'user', 'content': text})
@@ -49,8 +59,8 @@ def chat():
         
         session['all_messages'].append(f'INTAKE: {response_text}') 
         response = make_response(jsonify({'text': response_text}))
-        response.set_cookie('conversation_data', json.dumps(session['conversation']))
-        response.set_cookie('all_messages_data', json.dumps(session['all_messages']))
+        response.set_cookie('conversation_data', json.dumps(session['conversation']), httponly=False)
+        response.set_cookie('all_messages_data', json.dumps(session['all_messages']), httponly=False)
         return response
 
 
@@ -71,6 +81,7 @@ def chat():
         scenario = generate_scenarios_and_outcomes(notes)
         return jsonify({'scenario_and_outcomes':scenario})
 
+    
     return jsonify({'notes': notes })
 
 
