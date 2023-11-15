@@ -68,6 +68,7 @@ def chat():
 
 
     # Generate intake notes
+    response.delete_cookie('conversation_data')
     notes = generate_intake_notes(session['all_messages'])
 
     result = request.args.get('results', '')
