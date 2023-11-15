@@ -25,7 +25,10 @@ def home():
         session.pop('conversation', None)
     if 'all_messages' in session:
         session.pop('all_messages', None)
-    return render_template('index.html')
+    response = make_response(render_template('index.html'))
+    response.delete_cookie('conversation_data')
+    response.delete_cookie('all_messages_data')
+    return response
     
 
 @app.route('/chat', methods=['GET', 'POST'])
