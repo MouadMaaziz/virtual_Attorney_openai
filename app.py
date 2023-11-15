@@ -68,7 +68,7 @@ def chat():
 
 
     # Generate intake notes
-    response.delete_cookie('conversation_data')
+    
     notes = generate_intake_notes(session['all_messages'])
 
     result = request.args.get('results', '')
@@ -85,8 +85,9 @@ def chat():
         scenario = generate_scenarios_and_outcomes(notes)
         return jsonify({'scenario_and_outcomes':scenario})
 
-    
-    return jsonify({'notes': notes })
+    response = make_response({'notes': notes })
+    response.delete_cookie('conversation_data')
+    return response
 
 
 
