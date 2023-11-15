@@ -85,7 +85,7 @@ def chat():
         scenario = generate_scenarios_and_outcomes(notes)
         return jsonify({'scenario_and_outcomes':scenario})
 
-    response = make_response({'notes': notes })
+    response = make_response(jsonify({'notes': notes }))
     response.delete_cookie('conversation_data')
     response.delete_cookie('all_messages_data')
     return response
