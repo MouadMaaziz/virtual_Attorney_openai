@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 openai.api_key = os.getenv('OPENAI_KEY')
 app.secret_key = 'jet39DH-313@'
-
+app.config['MAX_COOKIE_SIZE'] = 8192
 conversation = []
 conversation.append({'role': 'system', 'content': open_file('system_01_intake.md')})
 all_messages = []
