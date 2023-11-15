@@ -43,9 +43,9 @@ def chat():
             break
         session['all_messages'].append(f'CLIENT: {text}')
         #store the user's message and the Lawyer's response:
-        conversation.append({'role': 'user', 'content': text})
-        response_text, tokens = chatbot(conversation)
-        conversation.append({'role': 'assistant', 'content': response_text})  
+        session['conversation'].append({'role': 'user', 'content': text})
+        response_text, tokens = chatbot(session['conversation'])
+        session['conversation'].append({'role': 'assistant', 'content': response_text})  
         
         session['all_messages'].append(f'INTAKE: {response_text}') 
         response = make_response(jsonify({'text': response_text}))
