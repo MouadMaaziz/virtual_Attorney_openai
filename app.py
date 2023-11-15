@@ -41,13 +41,13 @@ def chat():
         text = request.args.get('user-input', '')
         if text == 'DONE' or text == '' :
             break
-        all_messages.append(f'CLIENT: {text}')
+        session['all_messages'].append(f'CLIENT: {text}')
         #store the user's message and the Lawyer's response:
         conversation.append({'role': 'user', 'content': text})
         response_text, tokens = chatbot(conversation)
         conversation.append({'role': 'assistant', 'content': response_text})  
         
-        all_messages.append(f'INTAKE: {response_text}') 
+        session['all_messages'].append(f'INTAKE: {response_text}') 
         response = make_response(jsonify({'text': response_text}))
         response.set_cookie('conversation_data', json.dumps(session['conversation']))
         return response
