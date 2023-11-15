@@ -54,7 +54,7 @@ def chat():
 
 
     # Generate intake notes
-    notes = generate_intake_notes(all_messages)
+    notes = generate_intake_notes(session['all_messages'])
 
     result = request.args.get('results', '')
 
