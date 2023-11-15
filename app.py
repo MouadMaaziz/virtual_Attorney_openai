@@ -87,6 +87,7 @@ def chat():
 
     response = make_response({'notes': notes })
     response.delete_cookie('conversation_data')
+    response.delete_cookie('all_messages_data')
     return response
 
 
