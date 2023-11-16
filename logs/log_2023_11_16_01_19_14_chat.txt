@@ -1,0 +1,35 @@
+<<BEGIN CLIENT INTAKE CHAT>>
+
+CLIENT: Hi
+
+INTAKE: Hello! How can I assist you with your legal concerns today?
+
+CLIENT: my veteran killed my dog
+
+INTAKE: I'm sorry to hear about your situation. Could you please provide more details? For instance, was this an accident or intentional?
+
+CLIENT: it was during a procedure
+
+INTAKE: I'm sorry for your loss. Could you please provide more details about the procedure? What was the procedure intended for and what exactly went wrong?
+
+CLIENT: the veteranian let his intern do it although he has not much experience.
+
+INTAKE: I'm sorry to hear that. Can you please clarify if you were informed or gave consent for the intern to perform the procedure on your dog?
+
+CLIENT: I didn't give consent.
+
+INTAKE: I see. Did the veterinarian or the clinic provide any explanation or compensation after the incident?
+
+CLIENT: they lied to me about the intern experience.
+
+INTAKE: I'm sorry to hear that. Did you have any written communication or documentation where they misrepresented the intern's experience?
+
+CLIENT: no they said the dog had little chance.
+
+INTAKE: I understand. Did they provide you with any written prognosis or medical records indicating that your dog had little chance of survival prior to the procedure?
+
+CLIENT: no they did not
+
+INTAKE: I see. Did you manage to discuss the incident with the veterinarian or the clinic management after the procedure? What was their response?
+
+<<END CLIENT INTAKE CHAT>>

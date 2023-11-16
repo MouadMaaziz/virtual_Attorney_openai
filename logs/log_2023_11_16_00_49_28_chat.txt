@@ -1,0 +1,15 @@
+<<BEGIN CLIENT INTAKE CHAT>>
+
+CLIENT: Hello
+
+INTAKE: Hello! How can I assist you with your legal concerns today?
+
+CLIENT: can you help me sue my boss ?
+
+INTAKE: I can certainly help guide you through the process. To start, could you please provide more details about why you want to sue your boss?
+
+CLIENT: he slaped me.
+
+INTAKE: I'm sorry to hear that you're going through this. Physical assault is a serious matter. Did you report this incident to anyone, such as your HR department or the police?
+
+<<END CLIENT INTAKE CHAT>>

@@ -1,0 +1,19 @@
+<<BEGIN CLIENT INTAKE CHAT>>
+
+CLIENT: Hello.
+
+INTAKE: Hello! How can I assist you with your legal concerns today?
+
+CLIENT: how can you help me ?
+
+INTAKE: I can help by asking you specific questions about your legal situation. This will help clarify the details and provide a better understanding of your case. What is your legal issue related to?
+
+CLIENT: my boss slaped me
+
+INTAKE: I'm sorry to hear that you're going through this. Can you please provide more details about the incident? When and where did it happen?
+
+CLIENT: at work 
+
+INTAKE: I understand it happened at work. Could you please specify the date and time of the incident?
+
+<<END CLIENT INTAKE CHAT>>
