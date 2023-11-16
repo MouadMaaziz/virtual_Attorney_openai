@@ -1,6 +1,6 @@
 import openai
-from time import time
-
+# from time import time
+from datetime import datetime
 
 # File operations
 
@@ -71,12 +71,14 @@ def generate_intake_notes(all_messages):
     conversation.append({'role': 'system', 'content': open_file('system_02_prepare_notes.md')})
     text_block = '\n\n'.join(all_messages)
     chat_log = f'<<BEGIN CLIENT INTAKE CHAT>>\n\n{text_block}\n\n<<END CLIENT INTAKE CHAT>>'
-    save_file(f'logs/log_{time()}_chat.txt', chat_log)
+    current_time = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+    save_file(f'logs/log_{current_time}_chat.txt', chat_log)
     conversation.append({'role': 'user', 'content': chat_log})
     notes, _ = chatbot(conversation)
     print(f'\n\nNotes version of conversation:\n\n{notes}')
-    save_file(f'logs/log_{time()}_notes.txt', notes)
-    return notes
+    notes_file = f'logs/log_{current_time}_notes.txt'
+    save_file(f'{notes_file}', notes)
+    return notes, notes_file
 
 def generate_lawyers_report(notes):
     """
