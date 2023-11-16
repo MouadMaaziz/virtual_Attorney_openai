@@ -31,7 +31,7 @@ def home():
 def chat():
     conversation = session.get('conversation', [{'role': 'system', 'content': open_file('system_01_intake.md')}])
     all_messages = session.get('all_messages', [])
-    notes_file = session.get('notes_file', None)
+    
 
     # Intake portion
     while True:
@@ -52,7 +52,7 @@ def chat():
         session['all_messages'] = all_messages 
         return jsonify({'text': response_text})
 
-
+    notes_file = session.get('notes_file', None)
     # Generate intake notes
     if not notes_file:
         notes, notes_file = generate_intake_notes(all_messages)
