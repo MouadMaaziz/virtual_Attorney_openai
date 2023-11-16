@@ -60,19 +60,16 @@ def chat():
     
 
     result = request.args.get('results', '')
-
+    notes = open_file(notes_file)
     if result =='report':
-        notes = open_file(notes_file)
         report = generate_lawyers_report(notes)
         return jsonify({'lawyer_report': report})
     
     elif result =='form':
-        notes = open_file(notes_file)
         form = prepare_for_form_requirements(notes)
         return jsonify({'form_requirements': form})
     
     elif result =='scenarios':
-        notes = open_file(notes_file)
         scenario = generate_scenarios_and_outcomes(notes)
         return jsonify({'scenario_and_outcomes':scenario})
 
