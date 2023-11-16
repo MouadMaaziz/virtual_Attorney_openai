@@ -57,10 +57,11 @@ def chat():
     if not notes_file:
         notes, notes_file = generate_intake_notes(all_messages)
         session['notes_file'] = notes_file
+        print('created note_file')
     
 
     result = request.args.get('results', '')
-    notes = open_file(notes_file)
+    notes = open_file(session['notes_file'])
     if result =='report':
         report = generate_lawyers_report(notes)
         return jsonify({'lawyer_report': report})
