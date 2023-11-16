@@ -5,8 +5,14 @@ from chat import chatbot, save_file, open_file, generate_intake_notes, generate_
 import openai
 import json
 from dotenv import load_dotenv
+import datetime
+from pathlib import Path
 
 load_dotenv()
+PROJECT_PATH = Path.cwd()
+LOG_FOLDER = PROJECT_PATH.joinpath('logs')
+
+
 
 app = Flask(__name__)
 
@@ -80,6 +86,29 @@ def chat():
         return jsonify({'scenario_and_outcomes':scenario})
 
     return jsonify({'notes': notes })
+
+
+
+
+
+
+@app.teardown_request
+def cleanup_upload_folder(request):
+    file_list = os.listdir(LOG_FOLDER)
+    threshold_date = datetime.datetime.now() - datetime.timedelta(hours=2)
+    print(file_list)
+    for file in file_list:
+        file_path = LOG_FOLDER.joinpath(file)
+        file_stat = os.stat(file_path)
+        file_mtime = datetime.datetime.fromtimestamp(file_stat.st_mtime)
+        if file_mtime < threshold_date and str(file_path).endswith(('.txt')):
+            os.remove(file_path)
+            print(f"Removed {file_path}")
+
+
+
+
+
 
 
 

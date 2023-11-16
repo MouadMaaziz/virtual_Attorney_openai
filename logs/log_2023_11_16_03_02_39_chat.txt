@@ -1,0 +1,11 @@
+<<BEGIN CLIENT INTAKE CHAT>>
+
+CLIENT: Hi
+
+INTAKE: Hello! How can I assist you with your legal concerns today?
+
+CLIENT: Hello. can you help me with my custody form ?
+
+INTAKE: Of course, I'd be happy to help. Could you please specify what particular issue you're having with your custody form?
+
+<<END CLIENT INTAKE CHAT>>
