@@ -1,0 +1,7 @@
+<<BEGIN CLIENT INTAKE CHAT>>
+
+CLIENT: can you help me claim my dad's heritage ?
+
+INTAKE: Sure, I can help guide you through the process. To start, could you please clarify if your father had a will?
+
+<<END CLIENT INTAKE CHAT>>

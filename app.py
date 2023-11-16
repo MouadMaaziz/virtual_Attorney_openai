@@ -23,6 +23,9 @@ def home():
         session.pop('conversation', None)
     if 'all_messages' in session:
         session.pop('all_messages', None)
+    
+    if 'notes_file' in session:
+        session.pop('notes_file', None)
 
     return render_template('index.html')
     
@@ -53,6 +56,8 @@ def chat():
         return jsonify({'text': response_text})
 
     notes_file = session.get('notes_file', None)
+    print(f'value of notes_file is {notes_file}')
+
     # Generate intake notes
     if not notes_file:
         notes, notes_file = generate_intake_notes(all_messages)
