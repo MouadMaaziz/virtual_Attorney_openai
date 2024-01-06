@@ -1,5 +1,5 @@
 halo
-openai==0.28
+openai==1.6.1
 pyyaml
 python-dotenv
 gunicorn
