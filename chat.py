@@ -1,9 +1,16 @@
-import openai
-# from time import time
+from openai import OpenAI
+import os
+from dotenv import load_dotenv
 from datetime import datetime
 
-# File operations
+load_dotenv()
 
+client = OpenAI(
+  api_key=os.getenv('OPENAI_KEY'),  # this is also the default, it can be omitted
+)
+
+
+# File operations
 def save_file(filepath, content):
     with open(filepath, 'w', encoding='utf-8') as outfile:
         outfile.write(content)
@@ -12,7 +19,6 @@ def open_file(filepath):
     with open(filepath, 'r', encoding='utf-8', errors='ignore') as infile:
         return infile.read()
 
-# API functions
 
 def chatbot(conversation, model="gpt-4-0613", temperature=0, max_tokens=2000):
     """
@@ -43,13 +49,12 @@ def chatbot(conversation, model="gpt-4-0613", temperature=0, max_tokens=2000):
     print(response)
     ```
     """
-    max_retry = 7
-    retry = 0
+
     while True:
         try:
-            response = openai.ChatCompletion.create(model=model, messages=conversation, temperature=temperature, max_tokens=max_tokens)
-            text = response['choices'][0]['message']['content']
-            return text, response['usage']['total_tokens']
+            response = client.chat.completions.create(model=model, messages=conversation, temperature=temperature, max_tokens=max_tokens)
+            text = response.choices[0].message.content
+            return text, response.usage.total_tokens
         
         except Exception as oops:
             print(f'\n\nError communicating with OpenAI: "{oops}"')
@@ -58,13 +63,14 @@ def chatbot(conversation, model="gpt-4-0613", temperature=0, max_tokens=2000):
 
 def generate_intake_notes(all_messages):
     """
-    Generate intake notes based on user input and save the chat log and notes to files.
+    Generate intake notes based on user input and save the chat log and notes to log files.
+    Lawyer report, forms's requirements and Scenarios simulation will be based on these notes.
 
     Parameters:
     - all_messages (list): List of all messages in the conversation.
 
     Returns:
-    - notes (str): The generated notes.
+    - tuple[ notes (str): The generated notes, notes_file_path (str)]
     """
     print('\n\nGenerating Intake Notes')
     conversation = list()
@@ -138,4 +144,12 @@ def generate_scenarios_and_outcomes(notes):
     return scenario
 
 
-
+def generate_problem_statements(report):
+    print('\n\nGenerating problem statements')
+    conversation = list()
+    conversation.append({'role': 'system', 'content': open_file('system_01_problem_statements.md')})
+    conversation.append({'role': 'user', 'content': report})
+    problem_statements, _ = chatbot(conversation)
+    #save_file(f'logs/log_{time()}_problem_statements.txt', problem_statements)
+    print(f'\n\nProblem statements:\n\n{problem_statements}')
+    return problem_statements

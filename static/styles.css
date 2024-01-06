@@ -1,17 +1,36 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Trebuchet MS', sans-serif,'Arial', sans-serif;
+    background-color: #dfe3ff;
     font-family: 'Open Sans', sans-serif;
 }
 
+.image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.no-padding-container {
+    padding: 0;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
 .chat-container {
     max-width: 600px;
     margin: 50px auto;
-    background-color: #fff;
+    background-color: #fbecec;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Trebuchet MS', sans-serif;;
+    
 }
 .main-header{
     width: 1em;
@@ -22,10 +41,9 @@ body {
     background-color: #b40025;
     color: #fff;
     padding: 20px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     /* text-align: center; */
-    background-image:url(/static/img/free_gaza.jpg);
     background-position: right; /* Center the image */
     background-size: contain; /* Resize the background image to cover the entire container */
     height: fit-content;
@@ -42,6 +60,7 @@ body {
     display: flex;
     align-items: center;
     padding: 10px;
+    opacity:0.1;
 }
 
 #user-input {
@@ -51,7 +70,10 @@ body {
     border-radius: 5px;
     margin-right: 10px;
 }
-
+#DONE{
+    font-weight: bolder;
+    color: red
+}
 button {
     padding: 10px 15px;
     background-color: #3498db;
@@ -69,7 +91,8 @@ button:hover {
     margin-bottom : 0
 }
 .intro {
-    font-weight: 500;
+    font-weight: 600;
+    text-align: center;
 
 }
 .assistant-chat{
@@ -85,12 +108,12 @@ button:hover {
     color: rgb(85, 145, 21);
 }
 
-
 /* Add these styles for the spinner */
 .spinner-container {
     text-align: center;
     margin: 0 4px;
 }
+
 
 .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
@@ -111,16 +134,115 @@ button:hover {
     text-align: center;
     display: none;
 }
+.court{
+    border: 2px solid #3498db;
 
-
-
+}
 .result-button {
     display: inline-block;
     padding: 5px 6px;
     text-decoration: none;
-    background-color: rgb(6, 216, 135);
+    background-color: #7de810;
     color: #ffffff;
     font-size: 16px;
     border-radius: 5px;
     margin: 2px;
 }
+
+.form-select{
+
+    border: none;
+    font-weight: 700;
+    color:rgb(0, 91, 41);
+    appearance: none;
+    text-decoration: underline;
+    text-decoration-color: rgb(1, 133, 133);
+    text-align: center;
+    background-color: #fbecec;
+}
+#pre-form{
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    color: rgb(0, 0, 0);
+    font-weight: 700;
+}
+.choices{
+    color:darkgreen
+}
+
+@font-face {
+    font-family: The Chieldren PERSONAL USE ONLY! ;
+    src: url(font/The\ Chieldren\ PERSONAL\ USE\ ONLY!.ttf);
+  }
+h1 {
+    font-family: 'The Chieldren PERSONAL USE ONLY!';
+    font-size: 60px;
+}
+
+h2 {
+    font-family: 'The Chieldren PERSONAL USE ONLY!';
+    font-size: 20x;
+}
+
+
+
+
+
+/* this is for styling the upload form button */
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wrapper .file-upload {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #FFFFFF;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom, #2590EB 50%, #FFFFFF 50%);
+    background-size: 100% 200%;
+    transition: all 1s;
+    color: #FFFFFF;
+    font-size: 100px;
+  
+  }
+
+  #in-chat-wrapper{
+    width: auto;
+    margin-right: 4px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s ease;
+  }
+
+
+  .wrapper img{
+    max-width: 60%;
+  }
+  .wrapper .file-upload input[type=file] {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .wrapper .file-upload:hover {
+    background-position: 0 -100%;
+    color: #2590EB;
+  }
+
+
+
+

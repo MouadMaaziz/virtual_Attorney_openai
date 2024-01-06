@@ -1,6 +1,17 @@
+# Context
+
+This repository is a develpment experiment of an OpenAI based chatbot, which prompts the user for their legal case, by asking them different questions before giving advice based on the user's request (A comprehensive report, Required documents, Scenario and outcomes, and a step by step to proceed to cout as either a defendant or an applicant)
+
+# Technologies used
+
+1. OpenAI's new assistant's API.
+2. Google's OCR.
+3. Flask for the chat interface.
+4. Prompt engineering.
+
 # Legal Intake Experiment
 
-Automated pipeline for legal intake, case assessment, form requirements, etc. Meant to be used as a legal advisor.
+Automated pipeline for legal intake, case assessment, form requirements, etc. Meant to be used as a Personal Attorney.
 
 
 # Legal Device Disclaimer
@@ -14,3 +25,10 @@ This disclaimer may be updated from time to time, and it is the responsibility o
 # Usage
 
 It's pretty much automatic. Just fire up `chat.py` and it will take you through the whole process. Everything will be saved out to `logs/`
+
+
+
+# Contributer:
+
+- Robert Perry
+- Mouad Maaziz
