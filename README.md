@@ -28,7 +28,7 @@ It's pretty much automatic. Just fire up `chat.py` and it will take you through 
 
 
 
-# Contributer:
+# Contributers:
 
 - Robert Perry
 - Mouad Maaziz
