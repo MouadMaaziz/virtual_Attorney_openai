@@ -103,9 +103,16 @@ def chat():
         conversation = [{'role': 'system', 'content': open_file('system_01_questionning_bot.md')}]
         all_messages = []
         
-        all_messages.append(f'CLIENT: {report}')
+        # Storing the user's message
+        all_messages.append(f'CLIENT: {notes}\n{report}')
         conversation.append({'role': 'user', 'content': report})
-        response_text, tokens = chatbot(conversation)
+        
+        # Getting the assistant's message
+        response_text, tokens = chatbot(conversation, max_tokens= 500)
+        
+        # Stroting the assistant's message
+        conversation.append({'role': 'assistant', 'content': response_text})  
+        all_messages.append(f'INTAKE: {response_text}')
         
         # Update session data after with the new personal attorney chat:
         session['conversation'] = conversation

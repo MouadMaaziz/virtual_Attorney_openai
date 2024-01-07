@@ -1,0 +1,8 @@
+<<BEGIN CLIENT INTAKE CHAT>>
+
+CLIENT: Hello, my name is Mouad, I am from CANADA,
+    and I am seeking legal advice about Divorce case
+
+INTAKE: Hello Mouad, I'm here to help you. Could you please provide more details about your divorce case? For instance, are there any children involved, and if so, what are their ages?
+
+<<END CLIENT INTAKE CHAT>>

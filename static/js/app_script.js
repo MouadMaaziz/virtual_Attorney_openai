@@ -42,6 +42,9 @@ function sendMessage(preData='') {
     // Clear the text input from the button 
     document.getElementById("user-input").value = "";
 
+    // hide choices if available
+    hideChoices()
+
     // Make an AJAX request to your Flask server with the user input
     function makeAjaxRequest(url, callback) {
         const xhr = new XMLHttpRequest();
@@ -66,50 +69,68 @@ function sendMessage(preData='') {
     makeAjaxRequest('/chat?user-input=' + encodeURIComponent(userInput)+'&results=' + encodeURIComponent(results), true);
 }
 
+
+
 // Function to append the assistant's message to the chat container
 function appendBotMessage(message) {
     let assistant = assistant_alias || 'Assistant'
     if (message.text !== undefined) {
         document.getElementById('chat-container').innerHTML += '<br>' + `<p><span class='assistant-chat'> ${assistant} :</span> ${message.text}</p>`;
         scrollToBottom();
+        hideSpinner();
     }
+
+    // If the response contains notes object. Equivalent of hitting DONE.
     if (message.notes !== undefined){
         document.getElementById('chat-container').innerHTML += '<br>' +
         `<p> <span class='report-section'> NOTES </span></p>`+
-        `<p> ${message.notes.replace(/\n/g, '<br>')}</p>`; 
+        `<p> ${message.notes.replace(/\n/g, '<br>').replace(/#/g, ' ')}</p>`; 
         scrollToBottom();
         showChoices();
+        hideSpinner()
     }
+
+    // If the response contains lawyer_report object
     if (message.lawyer_report !== undefined){
         document.getElementById('chat-container').innerHTML += '<br>' +
         `<p> <span class='report-section'> REPORT </span></p>` +
         `<p> ${message.lawyer_report.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`;
         scrollToBottom(); 
         showChoices();
+        hideSpinner()
     }
+
+    // If the response contains form_requirements object
     if (message.form_requirements !== undefined){
         document.getElementById('chat-container').innerHTML += '<br>' +
         `<p> <span class='report-section'> FORM REQUIREMENTS </span></p>`+
         `<p> ${message.form_requirements.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`; 
         scrollToBottom();
         showChoices();
+        hideSpinner()
     }
+
+    // If the response contains scenario_and_outcomes object
     if (message.scenario_and_outcomes !== undefined){
         document.getElementById('chat-container').innerHTML += '<br>' +
         `<p> <span class='report-section'> SCENARIONS AND OUTCOMES </span></p>`+
         `<p> ${message.scenario_and_outcomes.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`; 
         scrollToBottom();
         showChoices();
+        hideSpinner()
     }
+    
 
     // Show upload form button at the mention of the word form or Form
-    const wordsToCheck = ["form", "Form", "FORM"]
-    const containsAnyWord = wordsToCheck.some(word=> message.text.includes(word));
+    const wordsToCheck = /\b(?:form|Form|FORM|forms|Document|document|Documents|documents)\b/;
+    const containsAnyWord = wordsToCheck.test(message.text);
     if (containsAnyWord){
         setTimeout(showUploadButton,3000);
     }
 
 }
+
+
 
 function showUploadButton(){
     document.getElementById('in-chat-wrapper').style.display = 'block';
@@ -137,9 +158,8 @@ document.getElementById('results').style.display = 'block';
 
 function hideChoices() {
     document.getElementById('results').style.display = 'none';
-    document.getElementById('chat-container').innerHTML += '<br>' + `<p class='intro'><span > Passing your info to an attorney. Please wait...</p>`;
     scrollToBottom();
-    assistant_alias = 'Your personel attorney';
+    
 }
 
 function showSpinner() {
@@ -148,4 +168,12 @@ document.getElementById("spinner").style.display = "block";
 
 function hideSpinner() {
 document.getElementById("spinner").style.display = "none";
+}
+
+
+function getAttorney(){
+    document.getElementById('results').style.display = 'none';
+    assistant_alias = 'Your personel attorney';
+    document.getElementById('chat-container').innerHTML += '<br>' + `<p class='intro'><span > Passing your info to an attorney. Please wait...</p>`;
+            
 }
