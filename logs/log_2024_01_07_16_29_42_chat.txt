@@ -1,8 +1,0 @@
-<<BEGIN CLIENT INTAKE CHAT>>
-
-CLIENT: Hello, my name is Yassine, I am from USA,
-    and I am seeking legal advice about Divorce case
-
-INTAKE: Hello Yassine, I'm here to help you. Could you please provide more details about your divorce case? For instance, are there any children involved, and if so, what are their ages?
-
-<<END CLIENT INTAKE CHAT>>

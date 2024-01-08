@@ -1,3 +1,11 @@
+
+
+
+const CHAT_CONTAINER = document.getElementById('chat-container');
+const RESULTS_FORM = document.getElementById('results');
+const USER_INPUT = document.getElementById('user-input');
+let assistant_alias = '';
+
 // Attach an event listener to the form submission
 document.getElementById("chat-form").addEventListener("submit", function (event) {
     event.preventDefault(); // prevent the form from submitting in the traditional way
@@ -18,29 +26,28 @@ document.getElementById("pre-form").addEventListener("submit", function (event) 
     showForm();
 });
 
-document.getElementById("results").addEventListener("submit", function (event) {
+RESULTS_FORM.addEventListener("submit", function (event) {
     event.preventDefault(); // prevent the form from submitting in the traditional way
     showSpinner();
     sendMessage();
 });
 
-let assistant_alias = ''
 
 // Function to send user input to the server
-function sendMessage(preData='') {
+function sendMessage(preData = '') {
     // Get user input from the input field
-    let userInput = document.getElementById("user-input").value +
-    preData;
-    
+    let userInput = USER_INPUT.value +
+        preData;
+
     let results = event.submitter.value
 
     // Display the user's message in the chat container
-    if (userInput !== ''){
-    document.getElementById("chat-container").innerHTML += `<p><span class='client-chat'> Client</span>: ${userInput}</p>`;
-    scrollToBottom(); // Scroll to the bottom of the chat container
-    }   
+    if (userInput !== '') {
+        CHAT_CONTAINER.innerHTML += `<p><span class='client-chat'> Client</span>: ${userInput}</p>`;
+        scrollToBottom(); // Scroll to the bottom of the chat container
+    }
     // Clear the text input from the button 
-    document.getElementById("user-input").value = "";
+    USER_INPUT.value = "";
 
     // hide choices if available
     hideChoices()
@@ -66,73 +73,71 @@ function sendMessage(preData='') {
         xhr.send();
     }
     // Configure and send the AJAX request
-    makeAjaxRequest('/chat?user-input=' + encodeURIComponent(userInput)+'&results=' + encodeURIComponent(results), true);
+    makeAjaxRequest('/chat?user-input=' + encodeURIComponent(userInput) + '&results=' + encodeURIComponent(results), true);
 }
-
 
 
 // Function to append the assistant's message to the chat container
 function appendBotMessage(message) {
     let assistant = assistant_alias || 'Assistant'
     if (message.text !== undefined) {
-        document.getElementById('chat-container').innerHTML += '<br>' + `<p><span class='assistant-chat'> ${assistant} :</span> ${message.text}</p>`;
+        CHAT_CONTAINER.innerHTML += '<br>' + `<p><span class='assistant-chat'> ${assistant} :</span> ${message.text}</p>`;
         scrollToBottom();
         hideSpinner();
     }
 
     // If the response contains notes object. Equivalent of hitting DONE.
-    if (message.notes !== undefined){
-        document.getElementById('chat-container').innerHTML += '<br>' +
-        `<p> <span class='report-section'> NOTES </span></p>`+
-        `<p> ${message.notes.replace(/\n/g, '<br>').replace(/#/g, ' ')}</p>`; 
+    if (message.notes !== undefined) {
+        CHAT_CONTAINER.innerHTML += '<br>' +
+            `<p> <span class='report-section'> NOTES </span></p>` +
+            `<p> ${message.notes.replace(/\n/g, '<br>').replace(/#/g, ' ')}</p>`;
         scrollToBottom();
         showChoices();
         hideSpinner()
     }
 
     // If the response contains lawyer_report object
-    if (message.lawyer_report !== undefined){
-        document.getElementById('chat-container').innerHTML += '<br>' +
-        `<p> <span class='report-section'> REPORT </span></p>` +
-        `<p> ${message.lawyer_report.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`;
-        scrollToBottom(); 
+    if (message.lawyer_report !== undefined) {
+        CHAT_CONTAINER.innerHTML += '<br>' +
+            `<p> <span class='report-section'> REPORT </span></p>` +
+            `<p> ${message.lawyer_report.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`;
+        scrollToBottom();
         showChoices();
         hideSpinner()
     }
 
     // If the response contains form_requirements object
-    if (message.form_requirements !== undefined){
-        document.getElementById('chat-container').innerHTML += '<br>' +
-        `<p> <span class='report-section'> FORM REQUIREMENTS </span></p>`+
-        `<p> ${message.form_requirements.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`; 
+    if (message.form_requirements !== undefined) {
+        CHAT_CONTAINER.innerHTML += '<br>' +
+            `<p> <span class='report-section'> FORM REQUIREMENTS </span></p>` +
+            `<p> ${message.form_requirements.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`;
         scrollToBottom();
         showChoices();
         hideSpinner()
     }
 
     // If the response contains scenario_and_outcomes object
-    if (message.scenario_and_outcomes !== undefined){
-        document.getElementById('chat-container').innerHTML += '<br>' +
-        `<p> <span class='report-section'> SCENARIONS AND OUTCOMES </span></p>`+
-        `<p> ${message.scenario_and_outcomes.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`; 
+    if (message.scenario_and_outcomes !== undefined) {
+        CHAT_CONTAINER.innerHTML += '<br>' +
+            `<p> <span class='report-section'> SCENARIONS AND OUTCOMES </span></p>` +
+            `<p> ${message.scenario_and_outcomes.replace(/#/g, ' ').replace(/\n/g, '<br>')}</p>`;
         scrollToBottom();
         showChoices();
         hideSpinner()
     }
-    
+
 
     // Show upload form button at the mention of the word form or Form
     const wordsToCheck = /\b(?:form|Form|FORM|forms|Document|document|Documents|documents)\b/;
     const containsAnyWord = wordsToCheck.test(message.text);
-    if (containsAnyWord){
-        setTimeout(showUploadButton,3000);
+    if (containsAnyWord) {
+        setTimeout(showUploadButton, 3000);
     }
 
 }
 
 
-
-function showUploadButton(){
+function showUploadButton() {
     document.getElementById('in-chat-wrapper').style.display = 'block';
     document.getElementById('in-chat-wrapper').classList.add('active');
     document.getElementById('in-chat-wrapper').style.opacity = '1';
@@ -144,36 +149,35 @@ function hidePreForm() {
 
 function showForm() {
     document.getElementById('chat-form').style.opacity = 1;
-    document.getElementById('chat-container').style.display = 'block';
+    CHAT_CONTAINER.style.display = 'block';
 }
 
 function scrollToBottom() {
-    let chatContainer = document.getElementById("chat-container");
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+    CHAT_CONTAINER.scrollTop = CHAT_CONTAINER.scrollHeight;
 }
 
 function showChoices() {
-document.getElementById('results').style.display = 'block';
+    RESULTS_FORM.style.display = 'block';
 }
 
 function hideChoices() {
-    document.getElementById('results').style.display = 'none';
+    RESULTS_FORM.style.display = 'none';
     scrollToBottom();
-    
+
 }
 
 function showSpinner() {
-document.getElementById("spinner").style.display = "block";
+    document.getElementById("spinner").style.display = "block";
 }
 
 function hideSpinner() {
-document.getElementById("spinner").style.display = "none";
+    document.getElementById("spinner").style.display = "none";
 }
 
 
-function getAttorney(){
-    document.getElementById('results').style.display = 'none';
+function getAttorney() {
+    RESULTS_FORM.style.display = 'none';
     assistant_alias = 'Your personel attorney';
-    document.getElementById('chat-container').innerHTML += '<br>' + `<p class='intro'><span > Passing your info to an attorney. Please wait...</p>`;
-            
+    CHAT_CONTAINER.innerHTML += '<br>' + `<p class='intro'><span > Passing your info to an attorney. Please wait...</p>`;
+
 }

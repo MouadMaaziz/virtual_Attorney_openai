@@ -43,11 +43,12 @@ body {
     padding: 20px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    /* text-align: center; */
+    text-align: center;
     background-position: right; /* Center the image */
     background-size: contain; /* Resize the background image to cover the entire container */
     height: fit-content;
     background-repeat: no-repeat;
+    white-space: nowrap;
 }
 
 .chat-content {

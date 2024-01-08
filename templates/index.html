@@ -21,7 +21,7 @@
                 <div class="chat-header">
                     <h1 class="main-header ">
                         <h1> Your Virtual Attorney</h1>
-                        
+
                 </div>
             </div>
         </div>
@@ -58,16 +58,16 @@
                     <button type="submit" form="pre-form">START CONVERSATION</button>
                     <br><br>
             </form>
-            
+
             <p>OR BEGIN BY UPLOADING A LEGAL FORM</p>
             <div class="wrapper">
                 <div class="file-upload">
-                  <input type="file" />
-                  <i class="fa-solid fa-file-arrow-up"></i>
-                    <img src="static/img/upload.png" alt="" >
-                  </i>
+                    <input type="file" />
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                    <img src="static/img/upload.png" alt="">
+                    </i>
                 </div>
-              </div>
+            </div>
         </div>
         <div id="chat-container" class="chat-content" style="display: none;">
             <p class="intro">Share the details of your situation with our intake bot. When you're finished, simply type
@@ -77,7 +77,8 @@
 
         </div>
         <form action="/chat" method="get" id="results">
-            <button class="result-button court" type="submit" name="results" value="court" onclick="getAttorney()">Proceed straight to court</button>
+            <button class="result-button court" type="submit" name="results" value="court"
+                onclick="getAttorney()">Proceed straight to court</button>
             <br>
             OR ASK FOR :
             <br>
@@ -86,7 +87,7 @@
             <button class="result-button" type="submit" name="results" value="scenarios">Scenarions and
                 outcomes</button>
         </form>
-        
+
         <form id="chat-form" action="/chat" method="get" class="chat-input-form">
 
             <input name="user-input" type="text" id="user-input" placeholder="Type your message...">
@@ -95,12 +96,12 @@
             </div>
             <div class="wrapper" id="in-chat-wrapper">
                 <div class="file-upload">
-                  <input type="file" />
-                  <i class="fa-solid fa-file-arrow-up"></i>
-                    <img src="static/img/upload.png" alt="" >
-                  </i>
+                    <input type="file" />
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                    <img src="static/img/upload.png" alt="">
+                    </i>
                 </div>
-              </div>
+            </div>
             <button type="submit" ">Send</button>
         </form>
         

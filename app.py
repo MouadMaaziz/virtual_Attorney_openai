@@ -108,7 +108,7 @@ def chat():
         conversation.append({'role': 'user', 'content': report})
         
         # Getting the assistant's message
-        response_text, tokens = chatbot(conversation, max_tokens= 500)
+        response_text, tokens = chatbot(conversation, max_tokens= 200)
         
         # Stroting the assistant's message
         conversation.append({'role': 'assistant', 'content': response_text})  
