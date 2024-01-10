@@ -60,7 +60,7 @@ def chat():
         conversation.append({'role': 'user', 'content': text})
         
         # Get the Lawyer's response:
-        response_text, tokens = chatbot(conversation)
+        response_text, _ = chatbot(conversation)
         
         # Store the Lawyer's response:
         conversation.append({'role': 'assistant', 'content': response_text})  
