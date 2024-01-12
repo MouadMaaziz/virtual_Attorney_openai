@@ -21,53 +21,69 @@
                 <div class="chat-header">
                     <h1 class="main-header ">
                         <h1> Your Virtual Attorney</h1>
+                    
+                        <form action="/clear" method="get" id="clear-session">
+                            <p>{{message}} {{button | safe}}
+                                <br>
+                                {{info}}
+                                
+                            </p>
+                            
+                        </form>
 
                 </div>
+                
             </div>
         </div>
+        
         <div class="pre-chat-container">
             <form action="/prechat" method="get" id="pre-form">
                 <div class="list-choice">
                     My name is
                     <input name="user-name" required class="form-select" size="8" type="text" id="user-name"
-                        placeholder="YOUR NAME" value="Mouad">
+                        placeholder="YOUR NAME" value={{clientName}}>
                     , I am from
-
                     <select name='country' class="form-select" required aria-label="Default select example"
                         id="country">
-
                         <option disabled>COUNTRY</option>
-                        <option selected value="USA">the USA</option>
+                        <option selected value="the USA">the USA</option>
                         <option value="CANADA">CANADA</option>
                         <option value="BRAZIL">BRAZIL</option>
-
-                    </select>
-                    , and I am seeking legal advice in
-                    <select id='legal-case' name="legal-case" class="form-select" required
-                        aria-label="Default select example">
-
-                        <option selected disabled>LEGAL INQUIRY</option>
-                        <option selected value="Divorce case">Divorce case</option>
+                    </select>.
+                    
+                    <br>
+                    I am seeking legal advice in
+                    <select id='legal-case' name="legal-case" class="form-select" aria-label="Default select example">
+                    
+                        <option selected><span
+                                class='blank'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </span></option>
+                        <option value="Divorce case">Divorce case</option>
                         <option value="Garnishment">Garnishment</option>
                         <option value="Heritage claim">Heritage claim</option>
-                        <option value="Filling out a form">Filling out a form</option>
+                        <option value="Filling out a form">Filling a form</option>
                         <option value="By Law">By Law</option>
-
-                    </select>
+                    
+                    </select> <span class ='optional'>(Optional)</span> 
                     <br> <br>
                     <button type="submit" form="pre-form">START CONVERSATION</button>
                     <br><br>
-            </form>
+                    </div>
 
-            <p>OR BEGIN BY UPLOADING A LEGAL FORM</p>
-            <div class="wrapper">
-                <div class="file-upload">
-                    <input type="file" />
-                    <i class="fa-solid fa-file-arrow-up"></i>
-                    <img src="static/img/upload.png" alt="">
-                    </i>
-                </div>
-            </div>
+                    <p>OR BEGIN BY UPLOADING A LEGAL FORM</p>
+
+                    <div class="wrapper">
+                        <div class="file-upload">
+                            <input type="file" />
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                            <img src="static/img/upload.png" alt="">
+                            </i>
+                        </div>
+                    </div>
+            </form>
+            
+            
+            
         </div>
         <div id="chat-container" class="chat-content" style="display: none;">
             <p class="intro">Share the details of your situation with our intake bot. When you're finished, simply type

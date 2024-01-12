@@ -6,6 +6,12 @@ const RESULTS_FORM = document.getElementById('results');
 const USER_INPUT = document.getElementById('user-input');
 let assistant_alias = '';
 
+
+// Prevent the default behaviour of Clear_session form:
+document.getElementById('clear-session').addEventListener('submit',function(event){
+    
+} )
+
 // Attach an event listener to the form submission
 document.getElementById("chat-form").addEventListener("submit", function (event) {
     event.preventDefault(); // prevent the form from submitting in the traditional way
@@ -16,12 +22,20 @@ document.getElementById("chat-form").addEventListener("submit", function (event)
 document.getElementById("pre-form").addEventListener("submit", function (event) {
     event.preventDefault(); // prevent the form from submitting in the traditional way
     userName = document.getElementById("user-name").value;
+    customerName = userName
     userCountry = document.getElementById("country").value;
     legalCase = document.getElementById("legal-case").value;
-    initialMessage = `Hello, my name is ${userName}, I am from ${userCountry},
-    and I am seeking legal advice about ${legalCase}`;
+    
+    if (legalCase == false){
+        initialMessage = `Hello, my name is ${userName}, I am from ${userCountry}.`
+    }
+    else{
+        initialMessage = `Hello, my name is ${userName}, I am from ${userCountry},
+        and I am seeking legal advice about ${legalCase}`;
+    }
+
     showSpinner();
-    sendMessage(initialMessage);
+    sendMessage(initialMessage,userName);
     hidePreForm();
     showForm();
 });
@@ -34,7 +48,8 @@ RESULTS_FORM.addEventListener("submit", function (event) {
 
 
 // Function to send user input to the server
-function sendMessage(preData = '') {
+function sendMessage(preData = '', userName='') {
+    
     // Get user input from the input field
     let userInput = USER_INPUT.value +
         preData;
@@ -73,7 +88,7 @@ function sendMessage(preData = '') {
         xhr.send();
     }
     // Configure and send the AJAX request
-    makeAjaxRequest('/chat?user-input=' + encodeURIComponent(userInput) + '&results=' + encodeURIComponent(results), true);
+    makeAjaxRequest('/chat?userName=' + customerName +'&user-input=' + encodeURIComponent(userInput) + '&results=' + encodeURIComponent(results), true);
 }
 
 

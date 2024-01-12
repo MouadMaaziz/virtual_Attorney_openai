@@ -64,6 +64,9 @@ body {
     opacity:0.1;
 }
 
+.pre-chat-container{
+    padding-top: 30px;
+}
 #user-input {
     flex: 1;
     padding: 10px;
@@ -75,6 +78,26 @@ body {
     font-weight: bolder;
     color: red
 }
+
+.optional{
+    color:#b1b1b1;
+}
+.blank{
+    text-decoration: underline;
+    text-decoration-color: rgb(1, 133, 133);
+}
+
+#clear-session{
+    font-size: 10px;
+    color: black;
+}
+#clear-session button{
+    all: initial;
+    font-size: 10px;
+    font-weight: 600 ;
+    text-decoration: underline;
+}
+
 button {
     padding: 10px 15px;
     background-color: #3498db;
@@ -89,12 +112,11 @@ button:hover {
 }
 
 .chat-container p {
-    margin-bottom : 0
+    margin-bottom : 0;
 }
 .intro {
     font-weight: 600;
     text-align: center;
-
 }
 .assistant-chat{
     color:rgb(117, 232, 3)

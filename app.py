@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from chat import (chatbot, open_file, generate_intake_notes, generate_lawyers_report,
                   generate_scenarios_and_outcomes, prepare_for_form_requirements,
                   )
@@ -7,7 +7,7 @@ from chat import (chatbot, open_file, generate_intake_notes, generate_lawyers_re
 from dotenv import load_dotenv
 import datetime
 from pathlib import Path
-
+import time
 load_dotenv()
 PROJECT_PATH = Path.cwd()
 LOG_FOLDER = PROJECT_PATH.joinpath('logs')
@@ -24,19 +24,45 @@ app.secret_key = 'jet39DH-313@'
 def home():
     # Every time the page is refreshed, any cached conversation 
     # should be wwiped out.
-    if 'conversation' in session:
-        session.pop('conversation', None)
-    if 'all_messages' in session:
-        session.pop('all_messages', None)
-    if 'notes_file' in session:
-        session.pop('notes_file', None)
-    return render_template('index.html')
-    
+    clientName = session.get('userName', None)
+    message = ''
+    button = ''
+    info = ''
+    if 'userName' in session:
+        print(session['userName']) # send to the template the userName
+        message = f"A session under the name of {session['userName']} was found."
+        button = "<button type='submit' name='cleared' value='true' form='clear-session'>Clear session</button>"    
+        info = f"* Entering a different name will clear {clientName}'s session."
+        
+    return render_template('index.html',info = info, clientName = clientName, message = message, button = button)
+
+
+@app.route('/clear', methods=['GET'])
+def clear_session():
+    if request.args.get('cleared', None) == 'true':
+        print('Clearing session')
+        session.clear()
+    return redirect(url_for('home'))
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
+    
     ''' This endpoint is meant to be responding to AJAX requestes (Q&A)
     '''
+    # For debbuging:
+    for k,v in request.args.items():
+        print(f'{k} : {v}')
+    
+    # add if unserName is new (not equal to the one in session), clear session
+    previous_client = session.get('userName', None)
+    
+    if request.args.get('userName', None) != previous_client :
+        session['userName'] = request.args.get('userName', None)
+        session.pop('conversation', None)
+        session.pop('all_messages', None)
+        session.pop('notes_file', None)
+    for k, v in session.items():
+        print(k, ":", v)
     # Each time we need to load the latest conversation. if it's 
     # the first time, just initiate the system prompt.
     conversation = session.get('conversation', 
@@ -73,11 +99,11 @@ def chat():
         return jsonify({'text': response_text})
 
     # When the user types DONE, Laywer's notes are generated
-    notes_file = session.get('notes_file', None)
-    if not notes_file:
-        notes, notes_file = generate_intake_notes(all_messages)
-        session['notes_file'] = notes_file
-        print('created note_file')
+    #notes_file = session.get('notes_file', None)
+    # if not notes_file:
+    notes, notes_file = generate_intake_notes(all_messages)
+    session['notes_file'] = notes_file
+    print('created note_file')
     notes = open_file(session['notes_file'])
     
     # The user's requests after the conversation, it can be any of the following:    
@@ -121,7 +147,6 @@ def chat():
         return jsonify({'text': response_text})
 
     return jsonify({'notes': notes })
-
 
 
 @app.teardown_request
