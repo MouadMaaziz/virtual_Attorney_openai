@@ -1,0 +1,69 @@
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/feedback.css') }}">
+<div class="container">
+    <div class="header">
+      <h1 id="title">Assistant's response rating</h1>
+    <p id="description">Please, let us know what do you think about each response</p>
+    </div>
+     
+    <form id="survey-form" action="/feedback" method="post">
+      
+      <div class="small-row justify-sb">
+        <p>Not at all accurate</p>
+        <p>Extremely accurate</p>
+      </div>
+      
+      <div class="small-row justify-sb">
+        <div class="radio-control">
+          <input type="radio" id="recommend-1" name="recommend" value=1>
+          <label for="recommend-1">1</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-2" name="recommend" value=2>
+          <label for="recommend-2">2</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-3" name="recommend" value=3>
+          <label for="recommend-3">3</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-4" name="recommend" value=4>
+          <label for="recommend-4">4</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-5" name="recommend" value=5>
+          <label for="recommend-5">5</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-6" name="recommend" value=6>
+          <label for="recommend-6">6</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-7" name="recommend" value=7>
+          <label for="recommend-7">7</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-8" name="recommend" value=8>
+          <label for="recommend-8">8</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-9" name="recommend" value=9>
+          <label for="recommend-9">9</label>
+        </div>
+        <div class="radio-control">
+          <input type="radio" id="recommend-10" name="recommend" value=10>
+          <label for="recommend-10">10</label>
+        </div> 
+      </div>
+      
+      <div class="row">
+        <textarea rows="6" id="comments" name="comments" placeholder="Write your comments here..."></textarea>
+      </div>
+      
+  
+      <div class="row">
+        <button id="submit" type="submit">Submit</button>
+      </div>
+  
+      
+    </form>
+  </div>

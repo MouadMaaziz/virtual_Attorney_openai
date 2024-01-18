@@ -79,6 +79,11 @@ body {
     color: red
 }
 
+iframe{
+    height: 100%;
+    width: 100%;
+}
+
 .optional{
     color:#b1b1b1;
 }

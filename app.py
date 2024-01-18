@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, send_file
 from chat import (chatbot, open_file, generate_intake_notes, generate_lawyers_report,
                   generate_scenarios_and_outcomes, prepare_for_form_requirements,
                   )
@@ -8,10 +8,15 @@ from dotenv import load_dotenv
 import datetime
 from pathlib import Path
 import time
+
+import pandas as pd
+
+
 load_dotenv()
+
 PROJECT_PATH = Path.cwd()
 LOG_FOLDER = PROJECT_PATH.joinpath('logs')
- 
+
 
 app = Flask(__name__)
 
@@ -36,7 +41,25 @@ def home():
         
     return render_template('index.html',info = info, clientName = clientName, message = message, button = button)
 
-
+@app.route('/feedback', methods=['POST', 'GET'])
+def feedback_form():
+    if request.method == 'POST':
+        assistant_response = session['all_messages'][-1]
+        rating = request.form.get('recommend')
+        feedback = request.form.get('comments')
+        row = {'assistant response': assistant_response, 'rating': rating, 'feedback':feedback }
+        
+        df = pd.read_excel(str(PROJECT_PATH.joinpath('feedback.xlsx')))
+        df = df._append(row, ignore_index=True)
+        
+        df.to_excel(str(PROJECT_PATH.joinpath('feedback.xlsx')), index=False)
+    return render_template('feedback_form.html')
+    
+    
+@app.route('/get_feedback')
+def get_feedback():
+    return send_file(PROJECT_PATH.joinpath('feedback.xlsx'))
+    
 @app.route('/clear', methods=['GET'])
 def clear_session():
     if request.args.get('cleared', None) == 'true':

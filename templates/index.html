@@ -14,14 +14,13 @@
 </head>
 
 <body>
-
-    <div class="chat-container ">
+    <div class="row">
+    <div class="chat-container col-md-6">
         <div class="row align-items-center " style="height: 100px;">
             <div class="col-md-12 no-padding-container">
                 <div class="chat-header">
                     <h1 class="main-header ">
                         <h1> Your Virtual Attorney</h1>
-                    
                         <form action="/clear" method="get" id="clear-session">
                             <p>{{message}} {{button | safe}}
                                 <br>
@@ -122,6 +121,11 @@
         </form>
         
     </div>
+    <div class="col-md-4">
+        <iframe src="/feedback"  frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+    
 
     
     </script>

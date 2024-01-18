@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Limelight');
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+/*   color: #244752; */
+  color: #0095a8;
+  font-family: 'Open Sans', sans-serif;
+  justify-content: center;
+  margin: 0px;
+  padding: 0px;
+}
+
+div.container {
+  background-color: #fff;
+  border-radius: .5em;
+  overflow: hidden;
+}
+
+.header {
+  text-align: center;
+  background-color: #0095a8;
+  color: white;
+  padding: 0.5em 1em 0.5em 1em;
+  font-size: 1em;
+}
+
+h1 {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  font-weight: bold;
+  font-family: 'Limelight', cursive;
+  font-size: 1.5em;
+  line-height: 1em;
+}
+
+p {
+  margin: 0;
+}
+
+form {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+
+button{
+  padding: 0.4em 1.3em 0.4em 1.3em;
+  font-size: 1.3em;
+  color: white;
+  background-color: #087f23;
+  border-color: #087f23;
+  border-radius: .2em;
+  margin: 0 auto;
+  display: block;
+}
+
+label, button, p.label {
+  font-family: 'Limelight', cursive;
+}
+
+
+
+input, textarea, select {
+  font-size: 1em;
+  padding: 10px 5px 10px;
+  border-radius: 2px;
+}
+
+input[type="text"], input[type="email"] {
+  flex: 0 1 250px;
+}
+
+input[type="number"] {
+  flex: 0 0 6em;
+}
+
+label.wide {
+  flex: 1 1 140px;
+}
+
+
+input[type="checkbox"] + label, div.radio-control label {
+  font-family: 'Open Sans', sans-serif;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.small-row {
+  display: flex;
+  align-items: center;
+  padding: 3px;
+}
+
+div.radio-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.m-t-20 {
+  margin-top: 20px;
+}
+
+.justify-sb {
+  justify-content: space-between;
+}
+
+textarea {
+  width: 100%;
+}
