@@ -4,3 +4,5 @@ pyyaml
 python-dotenv
 gunicorn
 flask
+pandas
+openpyxl
