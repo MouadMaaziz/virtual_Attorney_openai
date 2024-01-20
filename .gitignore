@@ -5,4 +5,4 @@ key_openai.txt
 venv
 #logs/*
 !/logs/.gitkeep
-
+.xlsx

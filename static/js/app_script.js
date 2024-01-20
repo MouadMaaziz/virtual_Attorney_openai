@@ -1,6 +1,5 @@
 
 
-
 const CHAT_CONTAINER = document.getElementById('chat-container');
 const RESULTS_FORM = document.getElementById('results');
 const USER_INPUT = document.getElementById('user-input');

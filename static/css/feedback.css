@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Limelight');
+
 * {
   box-sizing: border-box;
 }
@@ -10,7 +9,8 @@ body {
   background-color: #ffffff;
 /*   color: #244752; */
   color: #0095a8;
-  font-family: 'Open Sans', sans-serif;
+  /* font-family: 'Open Sans', sans-serif; */
+  font-family: 'Trebuchet MS', sans-serif;;
   justify-content: center;
   margin: 0px;
   padding: 0px;
@@ -54,8 +54,8 @@ button{
   padding: 0.4em 1.3em 0.4em 1.3em;
   font-size: 1.3em;
   color: white;
-  background-color: #087f23;
-  border-color: #087f23;
+  background-color: #3498db;
+  border-color: #3498db;
   border-radius: .2em;
   margin: 0 auto;
   display: block;
