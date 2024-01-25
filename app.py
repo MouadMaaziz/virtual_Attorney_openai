@@ -47,12 +47,20 @@ def feedback_form():
         assistant_response = session['all_messages'][-1]
         rating = request.form.get('recommend')
         feedback = request.form.get('comments')
-        row = {'assistant response': assistant_response, 'rating': rating, 'feedback':feedback }
         
-        df = pd.read_excel(str(PROJECT_PATH.joinpath('feedback.xlsx')))
-        df = df._append(row, ignore_index=True)
+        row = {'assistant response': assistant_response,
+               'rating': rating,
+               'feedback':feedback,
+               
+               }
         
-        df.to_excel(str(PROJECT_PATH.joinpath('feedback.xlsx')), index=False)
+        try:
+            df = pd.read_excel(PROJECT_PATH.joinpath('feedback.xlsx'))
+            df = df._append(row, ignore_index=True)
+        except FileNotFoundError as e:
+            df = pd.DataFrame(row)
+        
+        df.to_excel(PROJECT_PATH.joinpath('feedback.xlsx'), index=False)
     return render_template('feedback_form.html')
     
     
