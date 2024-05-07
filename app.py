@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 from chat import (chatbot, open_file, generate_intake_notes, generate_lawyers_report,
                   generate_scenarios_and_outcomes, prepare_for_form_requirements,
                   )
+from flask_cors import CORS
 
 from dotenv import load_dotenv
 import datetime
@@ -19,7 +20,7 @@ LOG_FOLDER = PROJECT_PATH.joinpath('logs')
 
 
 app = Flask(__name__)
-
+CORS(app)
 conversation = []
 all_messages = []
 app.secret_key = 'jet39DH-313@'
