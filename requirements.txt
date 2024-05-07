@@ -6,3 +6,4 @@ gunicorn
 flask
 pandas
 openpyxl
+flask_cors
